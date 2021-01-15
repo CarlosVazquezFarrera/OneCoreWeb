@@ -14,4 +14,8 @@ export class SessionstorageserviceService {
   Islogged(): boolean{ 
     return sessionStorage.getItem('Logged')? true: false;
   }
+
+  RemoveLogin(): void{
+    sessionStorage.removeItem('Logged');
+  }
 }

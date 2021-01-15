@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginserviceService } from 'src/app/services/loginservice.service';
 import { Router } from '@angular/router';
+import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
 
 @Component({
   selector: 'app-home',
@@ -9,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private loginService: LoginserviceService,
+  constructor(private sessionService: SessionstorageserviceService,
               private router: Router) { }
 
   ngOnInit(): void {
   }
 
   logOut(){
-    this.loginService.logOut();
+    this.sessionService.RemoveLogin();
     this.router.navigateByUrl('login');
   }
 
