@@ -8,6 +8,7 @@ import { Usuario } from 'src/app/models/usuario';
 
 import Swal from 'sweetalert2';
 import { Response } from 'src/app/models/Api/Response';
+import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
 
 
 @Component({
@@ -18,9 +19,14 @@ import { Response } from 'src/app/models/Api/Response';
 export class LoginComponent implements OnInit {
 
   //#region  Constructor
-  constructor(private serviceLogin: LoginserviceService, private router: Router, private formBuilder: FormBuilder){
-    this.buildForm();
-  }
+  constructor(
+    private serviceLogin: LoginserviceService, 
+    private router: Router, 
+    private formBuilder: FormBuilder,
+    private sesionStorageService: SessionstorageserviceService)
+    {
+      this.buildForm();
+    }
   //#endregion
 
   //#region Atributos
@@ -65,6 +71,7 @@ export class LoginComponent implements OnInit {
       //Respuesta exitosa de la api
       if (responseApiLogin.exito){
         Swal.close();
+        this.sesionStorageService.SetLogin();
         this.router.navigateByUrl('home');
       }
       //Respuesta no exitosa de la api
