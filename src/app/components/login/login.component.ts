@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { NgForm } from '@angular/forms';
 
 import { LoginserviceService } from 'src/app/services/loginservice.service'; 
 
-import Swal from 'sweetalert2';
+
 import { apiResponse } from 'src/app/models/Api/Response';
-import { strict } from 'assert';
-import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
+
+import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -17,52 +19,49 @@ import { Usuario } from 'src/app/models/usuario';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private service: LoginserviceService,
-              private router: Router) { }
+  //#region  Constructor
+  constructor(private service: LoginserviceService, private router: Router, private formBuilder: FormBuilder){
+    this.buildForm();
+  }
+  //#endregion
 
-  usuario: Usuario = new Usuario();
-  recordarme: boolean;
+  //#region Atributos
+  usuario: Usuario;
+  form: FormGroup;
+  //#endregion
 
   ngOnInit(): void {
-    // if(localStorage.getItem('User')){
-    //   this.usuario. = localStorage.getItem('User');
-    // }
 
-    /*this.usuario.User = 'prueba@gmail.com';
-    this.usuario.Password = '12345';*/
   }
 
-  OnSubmit(){
-    Swal.fire(
-      {
-        icon:'info',
-        allowOutsideClick: false,
-        text: 'Iniciando sesión'
-      });
+  //#region  Métodos
+  private buildForm(){
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required]],
+    });
+    // this.form.valueChanges.subscribe(value => {
+    //   console.log(value);
+    // });
 
-    Swal.showLoading();
+  };
 
-    this.service.login(this.usuario).subscribe((response: apiResponse<Usuario>)=>{
-      if(response.exito)
-      {
-        Swal.close();
-        this.router.navigateByUrl('home');
-      }
-      else
-      {
-        Swal.fire({
-          icon:'error',
-          allowOutsideClick: false,
-          text: response.mensaje
-        });
-      }
-    }, (err)=>{
-      Swal.fire({
-        icon:'error',
-        allowOutsideClick: false,
-        text: 'Hubo un error al conectar al servidor'
-      });
-    }
-    );
-  }
+ save(event: Event) {
+   console.log(this.form)
+   event.preventDefault();
+   console.log(this.form.value);
+   
+   if (this.form.invalid){
+    this.form.markAllAsTouched();
+    return;
+  };
+}
+
+
+  
+  //#endregion
+  // OnSubmit(){
+  //   
+  // }
+  
 }
