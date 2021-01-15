@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsuarioModel } from 'src/app/models/usuario';
 import { NgForm } from '@angular/forms';
 
 import { LoginserviceService } from 'src/app/services/loginservice.service'; 
 
 import Swal from 'sweetalert2';
-import { apiResponse } from 'src/app/models/apiResponse';
+import { apiResponse } from 'src/app/models/Api/Response';
 import { strict } from 'assert';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -20,56 +20,49 @@ export class LoginComponent implements OnInit {
   constructor(private service: LoginserviceService,
               private router: Router) { }
 
-  usuario: UsuarioModel = new UsuarioModel();
+  usuario: Usuario = new Usuario();
   recordarme: boolean;
 
   ngOnInit(): void {
-    if(localStorage.getItem('User')){
-      this.usuario.User = localStorage.getItem('User');
-    }
+    // if(localStorage.getItem('User')){
+    //   this.usuario. = localStorage.getItem('User');
+    // }
 
     /*this.usuario.User = 'prueba@gmail.com';
     this.usuario.Password = '12345';*/
   }
 
-  OnSubmit(form: NgForm){
-    if(form.valid){
-
-      Swal.fire({
+  OnSubmit(){
+    Swal.fire(
+      {
         icon:'info',
         allowOutsideClick: false,
         text: 'Iniciando sesión'
       });
-      Swal.showLoading();
 
-      this.service.login(this.usuario).subscribe((response: apiResponse<UsuarioModel>)=>{
-        if(response.exito)
-        {
-          Swal.close();
+    Swal.showLoading();
 
-          if(this.recordarme){
-            localStorage.setItem('User', this.usuario.User);
-          }
-          localStorage.setItem('Token', 'TokenGenerado');
-
-          this.router.navigateByUrl('home');
-        }
-        else
-        {
-          Swal.fire({
-            icon:'error',
-            allowOutsideClick: false,
-            text: response.mensaje
-          });
-        }
-      }, (err)=>{
+    this.service.login(this.usuario).subscribe((response: apiResponse<Usuario>)=>{
+      if(response.exito)
+      {
+        Swal.close();
+        this.router.navigateByUrl('home');
+      }
+      else
+      {
         Swal.fire({
           icon:'error',
           allowOutsideClick: false,
-          text: 'Hubo un error al conectar al servidor'
+          text: response.mensaje
         });
       }
-      );
+    }, (err)=>{
+      Swal.fire({
+        icon:'error',
+        allowOutsideClick: false,
+        text: 'Hubo un error al conectar al servidor'
+      });
     }
+    );
   }
 }
