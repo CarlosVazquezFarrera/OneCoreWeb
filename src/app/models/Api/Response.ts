@@ -1,4 +1,4 @@
-export class apiResponse<T>{
+export class Response<T>{
     exito: boolean;
     mensaje: string;
     data: T;

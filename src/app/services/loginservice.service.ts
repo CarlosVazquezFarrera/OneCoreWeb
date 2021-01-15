@@ -11,7 +11,7 @@ export class LoginserviceService {
 
   //#region Constructor
   constructor(private http: HttpClient) {
-    this.urlApi = environment.urlApi;
+    this.urlApi = `${environment.urlApi}Login/`; 
   }
   //#endregion
   
@@ -22,7 +22,7 @@ export class LoginserviceService {
   //#region Métodos
    login(usuario: Usuario){
      return this.http.get(
-       `${this.urlApi}/?Correo=${usuario.correo}&Password=${usuario.password}`
+       `${this.urlApi}Login?Correo=${usuario.correo}&Password=${usuario.password}`
      );
    }
    //#endregion

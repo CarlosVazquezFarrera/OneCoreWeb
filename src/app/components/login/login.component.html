@@ -3,14 +3,13 @@
         <div class="wrap-login100 p-t-50 p-b-80 px-3 border">
             <!-- Formulario -->
             <form  [formGroup]="form" 
-                    (ngSubmit)="save($event)"
+                    (ngSubmit)="login($event)"
                     class="login100-form validate-form flex-sb flex-w justify-content-center">
                 <!-- Encabezzdo -->
                 <span class="login100-form-title p-b-51">
                     Login
                 </span>
                 <!-- Email -->
-
                 <div class="wrap-input100">
                     <input class="input100"
                         type="email" 
@@ -20,12 +19,12 @@
                     <span class="focus-input100"></span>
                 </div>
                 <!-- Mensaje de error de error de mensaje -->
-                <div *ngIf="form.get('email').hasError && form.get('email').touched">
+                <div *ngIf="emailField.hasError && emailField.touched">
                     <!-- Correo ingresado -->
-                    <span *ngIf="form.get('email').hasError('required')"
+                    <span *ngIf="emailField.hasError('required')"
                             class="text-danger animated fadeIn"> El correo es obligatorio</span>
                     <!-- Texto ingresado con formato no válido -->
-                    <span *ngIf="form.get('email').hasError('email')"
+                    <span *ngIf="emailField.hasError('email')"
                             class="text-danger animated fadeIn"> Ingrese un correo válido</span>
                 </div>
            
@@ -39,7 +38,7 @@
                     <span class="focus-input100"></span>
                 </div>
                  <!-- Mensaje de error de error de la contraseña -->
-                <span *ngIf="form.get('password').touched && form.get('password').hasError('required')" 
+                <span *ngIf="passwordFiel.touched && passwordFiel.hasError('required')" 
                         class="text-danger animated fadeIn">
                         La contraseña es obligatoria
                 </span>              

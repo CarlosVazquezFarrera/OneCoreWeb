@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 import { LoginserviceService } from 'src/app/services/loginservice.service'; 
-
-
-import { apiResponse } from 'src/app/models/Api/Response';
 import { Usuario } from 'src/app/models/usuario';
 
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
+import { Response } from 'src/app/models/Api/Response';
+
 
 @Component({
   selector: 'app-login',
@@ -20,7 +18,7 @@ import { environment } from 'src/environments/environment';
 export class LoginComponent implements OnInit {
 
   //#region  Constructor
-  constructor(private service: LoginserviceService, private router: Router, private formBuilder: FormBuilder){
+  constructor(private serviceLogin: LoginserviceService, private router: Router, private formBuilder: FormBuilder){
     this.buildForm();
   }
   //#endregion
@@ -35,33 +33,65 @@ export class LoginComponent implements OnInit {
   }
 
   //#region  Métodos
-  private buildForm(){
+
+  ///Construye el fornmulario reactivo 
+  private buildForm(): void{
     this.form = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required]],
     });
-    // this.form.valueChanges.subscribe(value => {
-    //   console.log(value);
-    // });
-
   };
-
- save(event: Event) {
-   console.log(this.form)
-   event.preventDefault();
-   console.log(this.form.value);
-   
-   if (this.form.invalid){
-    this.form.markAllAsTouched();
-    return;
-  };
-}
-
-
   
+  //Hace el proceso de Logueo
+  login(event: Event): void{
+    event.preventDefault();
+    if (this.form.invalid){
+      this.form.markAllAsTouched();
+      return;
+    };
+
+    this.usuario = new Usuario ();
+    this.usuario.correo = this.emailField.value;
+    this.usuario.password = this.passwordFiel.value;
+
+    //Modal de cargando
+    Swal.fire({
+      icon:'info',
+      allowOutsideClick: false,
+      text: 'Iniciando sesión'
+    });
+    Swal.showLoading();
+    this.serviceLogin.login(this.usuario).subscribe((responseApiLogin: Response<Usuario>)=>{
+      //Respuesta exitosa de la api
+      if (responseApiLogin.exito){
+        Swal.close();
+        this.router.navigateByUrl('home');
+      }
+      //Respuesta no exitosa de la api
+      else{
+        Swal.fire({
+          icon:'warning',
+          allowOutsideClick: false,
+          text: responseApiLogin.mensaje
+        });
+      }
+    },(error)=>{ //Error inesperado
+      Swal.fire({
+        icon:'error',
+        allowOutsideClick: false,
+        text: 'Hubo un error al conectar al servidor'
+      });
+    });
+  }
   //#endregion
-  // OnSubmit(){
-  //   
-  // }
-  
+
+  //#region  Gets
+  get emailField(){
+    return this.form.get('email');
+  }
+
+  get passwordFiel(){
+    return this.form.get('password');
+  }
+  //#endregion
 }
