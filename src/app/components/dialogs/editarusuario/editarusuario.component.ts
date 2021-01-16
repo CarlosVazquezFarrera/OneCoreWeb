@@ -12,7 +12,7 @@ export class EditarusuarioComponent implements OnInit {
   //#region Constructor
   constructor(public dialogRef: MatDialogRef<EditarusuarioComponent>, 
     private formBuilder: FormBuilder) {
-
+      this.buildForm();
   }
   //#endregion
 
@@ -23,8 +23,11 @@ export class EditarusuarioComponent implements OnInit {
 
   private buildForm(): void{
     this.form = this.formBuilder.group({
-      email: ['', [Validators.email, Validators.required]],
+      usuario: ['', [Validators.required]],
       password: ['', [Validators.required]],
+      passwordConfirmacion: ['', [Validators.required]],
+      sexo: ['', [Validators.required]],
+      correo: ['', [Validators.required, Validators.email]],
     });
   };
   
