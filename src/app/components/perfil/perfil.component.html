@@ -1,4 +1,5 @@
 <div class="limiter animated fadeInLeft">
+    <app-navbar></app-navbar>
     <div class="container-login100">
         <div class="wrap-login100 px-3  p-t-50 p-b-80 m-b-10">
             <div class="d-grid">
@@ -24,32 +25,6 @@
                 <!-- Mensaje de mensaje error de usuario -->
                 <span *ngIf="usuarioField.hasError('required') && usuarioField.touched"
                             class="text-danger animated fadeIn"> El usuario es obligatorio</span>
-                <!-- Contraseña -->
-                <div class="wrap-input100 m-t-16" data-validate>
-                    <input class="input100"
-                           type="password" 
-                           name="password" 
-                           formControlName="password"
-                           placeholder="Password">
-                    <span class="focus-input100"></span>
-                </div>
-                <!-- Mensaje de error de contraseña -->
-                <span *ngIf="passwordField.hasError('required') && passwordField.touched"
-                        class="text-danger animated fadeIn"> La contraseña es obligatoria</span>
-
-                <!-- Confirmar contraseña -->
-                <div class="wrap-input100 m-t-16" data-validate>
-                    <input class="input100"
-                           type="password" 
-                           name="passwordConfirmacion" 
-                           formControlName="passwordConfirmacion"
-                           placeholder="Confirmar Password">
-                    <span class="focus-input100"></span>
-                </div>
-                <!-- Mensaje de error de confirmación de contraseña -->
-                <span *ngIf="passwordConfirmacionField.hasError('required') && passwordConfirmacionField.touched"
-                        class="text-danger animated fadeIn"> La confirmación de la contraseña es obligatoria</span>
-
                 <!-- Sexo -->
                 <div class="w-full m-t-16 d-flex justify-content-between" data-validate>
                         <div class="form-check">
@@ -88,7 +63,41 @@
                 <span *ngIf="correoField.touched && correoField.hasError('required')" 
                         class="text-danger animated fadeIn">
                         El correo es obligatorio
-                </span>              
+                </span>
+                
+                <!-- Contraseña -->
+                <div class="wrap-input100 m-t-16" data-validate>
+                    <input class="input100"
+                           type="password" 
+                           name="password" 
+                           formControlName="password"
+                           placeholder="Password">
+                    <span class="focus-input100"></span>
+                </div>
+                <!-- Mensaje de error de contraseña -->
+                <div *ngIf="passwordField.hasError && passwordField.touched">
+                    <span *ngIf="passwordField.hasError('required')"
+                            class="text-danger animated fadeIn"> La contraseña es obligatoria</span>
+                    <span *ngIf="passwordField.hasError('minlength')"
+                            class="text-danger animated fadeIn"> Mínimo 10 caracteres</span>
+                    <span *ngIf="passwordField.hasError('pattern') && !passwordField.hasError('minlength')"
+                            class="text-danger text-break animated fadeIn"> Al menos una letra mayúscula, una minúscula, un número y un caracter especial</span>
+
+                </div>
+
+                <!-- Confirmar contraseña -->
+                <div class="wrap-input100 m-t-16" data-validate>
+                    <input class="input100"
+                           type="password" 
+                           name="passwordConfirmacion" 
+                           formControlName="passwordConfirmacion"
+                           placeholder="Confirmar Password">
+                    <span class="focus-input100"></span>
+                </div>
+                <!-- Mensaje de error de confirmación de contraseña --> 
+                <span *ngIf="passwordConfirmacionField.hasError('required') && passwordConfirmacionField.touched"
+                        class="text-danger animated fadeIn"> La confirmación de la contraseña es obligatoria</span>
+                
                 <!-- Boton -->
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn" 

@@ -14,6 +14,7 @@ import { EstatuspipePipe } from './pipes/estatuspipe.pipe';
 import { EditarusuarioComponent } from './components/dialogs/editarusuario/editarusuario.component';
 import { from } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     RegistroComponent,
     NavbarComponent,
     EstatuspipePipe,
-    EditarusuarioComponent
+    EditarusuarioComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

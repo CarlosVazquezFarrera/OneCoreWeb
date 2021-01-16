@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
     this.usuario.correo = this.emailField.value;
     this.usuario.password = CryptoJS.SHA3(this.passwordFiel.value).toString();
 
-    console.log(this.usuario.password);
     //Modal de cargando
     Swal.fire({
       icon:'info',
@@ -74,6 +73,8 @@ export class LoginComponent implements OnInit {
       if (responseApiLogin.exito){
         Swal.close();
         this.sesionStorageService.SetLogin();
+        this.sesionStorageService
+        this.sesionStorageService.SetUsuario(responseApiLogin.data);
         this.router.navigateByUrl('home');
       }
       //Respuesta no exitosa de la api

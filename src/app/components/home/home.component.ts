@@ -8,8 +8,7 @@ import { Usuario } from 'src/app/models/usuario';
 
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
-import { isUndefined } from 'util';
-import { isNull } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-home',
@@ -33,7 +32,13 @@ export class HomeComponent implements OnInit {
     this.cargarDatos();
   }
   public editarUsuario(usuario: Usuario): void{
-    const dialogRef = this.dialog.open(EditarusuarioComponent, {disableClose: true });
+    const dialogRef = this.dialog.open(EditarusuarioComponent, { 
+      data: usuario, 
+      disableClose: true});
+
+    dialogRef.afterClosed().subscribe(()=>{
+      this.cargarDatos();
+    });
   }
 
   public desactivarUsuario(idUsuario: string): void{

@@ -6,17 +6,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="navbar-brand">Inicio</a>
+          <a routerLink="/home" class="navbar-brand">Inicio</a>
         </li>
       </ul>
       <div class="d-flex">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle fs-6 logOut" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Logout
+            Sesión
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item cursor"
-                    (click)="logOut()">Salir</a></li>
+            <li>
+              <a class="dropdown-item cursor"
+                  (click)="perfil()">Perfil</a>
+          </li>
+            <li>
+                <a class="dropdown-item cursor"
+                    (click)="logOut()">Salir</a>
+            </li>
           </ul>
         </li>
       </div>
