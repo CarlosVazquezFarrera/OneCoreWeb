@@ -19,7 +19,6 @@
           <th scope="col">Sexo</th>
           <th scope="col">Estatus</th>
           <th scope="col"></th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -30,10 +29,7 @@
           <td>{{usuario.sexo}}</td>
           <td>{{usuario.estatus | estatuspipe}}</td>
           <td>
-            <i class="bi bi-pencil-fill acction-table" (click)="editarUsuario(usuario)"></i>
-          </td>        
-          <td>
-            <i class="bi bi-person-dash-fill acction-table" (click)="desactivarUsuario(usuario.id)"></i>
+            <i class="bi bi-person-dash-fill acction-table" (click)="desactivarUsuario(usuario)"></i>
           </td>
         </tr>
       </tbody>

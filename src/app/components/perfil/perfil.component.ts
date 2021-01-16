@@ -4,8 +4,14 @@ import { AbstractControl, FormBuilder, FormGroup, PatternValidator, Validators }
 import { Usuario } from 'src/app/models/usuario';
 import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
 
-import * as CryptoJS from 'crypto-js';
 import { MathValidator } from '../shared/CustomValidator/MatchValidator';
+import { UsuarioserviceService } from 'src/app/services/usuarioservice.service';
+
+import Swal from 'sweetalert2';
+import * as CryptoJS from 'crypto-js';
+import { SimpleResponse } from 'src/app/models/Api/SimpleResponse';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -14,15 +20,24 @@ import { MathValidator } from '../shared/CustomValidator/MatchValidator';
 })
 export class PerfilComponent implements OnInit {
 
+  //#region  Constructor  
   constructor(private formBuilder: FormBuilder, 
-    private sessionService: SessionstorageserviceService) {
+    private sessionService: SessionstorageserviceService,
+    private servicioUsuario: UsuarioserviceService,
+    private router: Router) {
       this.ObtenerUsuarioYConstruirFormulario(); 
     }
-
+  //#endregion
+  
+  //#region  Atributos
   form: FormGroup;
   usuario: Usuario;
   pattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{10,}$/;
+  //#endregion
 
+  //#region Métodos
+
+  //Recupera el usuario almacenado y setea los datos al formulario reactivo 
   private ObtenerUsuarioYConstruirFormulario(){
     this.usuario = this.sessionService.GetUsuario();
 
@@ -40,19 +55,52 @@ export class PerfilComponent implements OnInit {
     );
   }
 
-  
   ngOnInit(): void {
-    //this.ObtenerUsuario();
   }
-
-
+  //Realiza la petición para actualziar el usuario 
   actualizar(event: Event): void{
     event.preventDefault();
-    console.log(this.form);
     if (this.form.invalid){
       this.form.markAllAsTouched();
       return;
     };
+
+    this.usuario.nombreUsuario = this.usuarioField.value;
+    this.usuario.password = CryptoJS.SHA3(this.passwordField.value).toString();
+    this.usuario.sexo = this.sexoField.value;
+    this.usuario.correo = this.correoField.value;
+
+      //Modal de cargando
+      Swal.fire({
+        icon:'info',
+        allowOutsideClick: false,
+        text: 'Actualizando'
+      });
+      Swal.showLoading();
+    this.servicioUsuario.actualizarUsuario(this.usuario).subscribe((actualizarUsuarioApi: SimpleResponse)=>{
+      if (actualizarUsuarioApi.exito){
+        Swal.fire({
+          icon:'success',
+          allowOutsideClick: false,
+          text: actualizarUsuarioApi.mensaje
+        });
+        this.sessionService.LogOut();
+        this.router.navigateByUrl('login');
+      }
+      else{
+        Swal.fire({
+          icon:'warning',
+          allowOutsideClick: false,
+          text: actualizarUsuarioApi.mensaje
+        });
+      }
+    }, ()=>{
+      Swal.fire({
+        icon:'error',
+        allowOutsideClick: false,
+        text: environment.errorApiMensaje
+      });
+    });
   }
   //#endregion
 
@@ -73,5 +121,5 @@ export class PerfilComponent implements OnInit {
   get correoField(){
     return this.form.get('correo');
   }
-
+  //#endregion
 }

@@ -27,4 +27,9 @@ export class SessionstorageserviceService {
   RemoveLogin(): void{
     sessionStorage.removeItem('Logged');
   }
+
+  LogOut():void{
+    this.RemoveUsuario();
+    this.RemoveLogin();
+  }
 }

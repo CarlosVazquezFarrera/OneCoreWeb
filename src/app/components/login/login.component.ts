@@ -35,12 +35,10 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   //#endregion
 
+  //#region  Métodos
   ngOnInit(): void {
 
   }
-
-  //#region  Métodos
-
   ///Construye el fornmulario reactivo 
   private buildForm(): void{
     this.form = this.formBuilder.group({
@@ -49,7 +47,7 @@ export class LoginComponent implements OnInit {
     });
   };
   
-  //Hace el proceso de Logueo
+  //Consula al api para realziar el proceso de logueo
   login(event: Event): void{
     event.preventDefault();
     if (this.form.invalid){
@@ -85,11 +83,11 @@ export class LoginComponent implements OnInit {
           text: responseApiLogin.mensaje
         });
       }
-    },(error)=>{ //Error inesperado
+    },()=>{ //Error inesperado
       Swal.fire({
         icon:'error',
         allowOutsideClick: false,
-        text: 'Hubo un error al conectar al servidor'
+        text: environment.errorApiMensaje
       });
     });
   }

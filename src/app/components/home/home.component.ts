@@ -18,16 +18,21 @@ import { environment } from 'src/environments/environment';
 export class HomeComponent implements OnInit {
 
   //#region Constructor
-  constructor(private usuarioService: UsuarioserviceService, private dialog: MatDialog) { }
+  constructor(
+    private usuarioService: UsuarioserviceService, 
+    private dialog: MatDialog){
+
+  }
   //#endregion
 
-  //#region 
+  //#region Atributos
   public Usuarios: Array<Usuario>;
-
   public recargar: boolean = false;
   //#endregion
 
   //#region Métodos
+
+  //Una vez que se renderiza la pantalla, se consulta al api y se obtiene la información
   ngOnInit(): void {
     this.cargarDatos();
   }
@@ -41,11 +46,26 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public desactivarUsuario(idUsuario: string): void{
-    console.log(idUsuario);
+  public desactivarUsuario(usuario: Usuario): void{
+    console.log(usuario);
+    Swal.fire({
+      title: `¿Seguro que desea desactivar al usuario ${usuario.nombreUsuario}?`,
+      showCancelButton: true,
+      confirmButtonText: `Sí`,
+      cancelButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Saved!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
   }
-   cargarDatos(): void{
+
+  cargarDatos(): void{
     this.recargar = false;
+    //Modal de cargando
     Swal.fire({
       icon:'info',
       allowOutsideClick: false,
@@ -53,20 +73,19 @@ export class HomeComponent implements OnInit {
     });
     Swal.showLoading();
     this.usuarioService.obtenerUsuarios().subscribe((responseUsuarioApie: Response<Array<Usuario>>)=>{
-      if (responseUsuarioApie.exito){
+      if (responseUsuarioApie.exito){ //Respuesta exitosa del api
         this.Usuarios = responseUsuarioApie.data;
         Swal.close();
       }
-      else{
+      else{ //Respuesta negativa del api
         Swal.fire({
           icon:'warning',
           allowOutsideClick: false,
           text: responseUsuarioApie.mensaje
         });
       }
-    }, (errorApi)=>{
-      
-      Swal.fire({
+    }, ()=>{
+      Swal.fire({ //Error inesperado
         icon:'error',
         allowOutsideClick: false,
         text: environment.errorApiMensaje

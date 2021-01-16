@@ -16,8 +16,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut(){
-    this.sessionService.RemoveLogin();
-    this.sessionService.RemoveUsuario();
+   this.sessionService.LogOut();
     this.router.navigateByUrl('login');
   }
 
