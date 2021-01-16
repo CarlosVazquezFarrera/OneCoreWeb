@@ -26,11 +26,4 @@ export class LoginserviceService {
      );
    }
    //#endregion
-   isLogged(): boolean{
-     return localStorage.getItem('Token')? true: false;
-   }
-
-   logOut(){
-     localStorage.removeItem('Token');
-   }
 }
