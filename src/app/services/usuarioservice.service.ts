@@ -28,7 +28,7 @@ export class UsuarioserviceService {
   //#region  Métodos
 
   obtenerUsuarios(){
-    return this.http.get(`${this.urlApi}ObtenerUsuarios`);
+    return this.http.get(`${this.urlApi}ObtenerUsuarios`, httpOptions);
   }
 
   actualizarUsuario(usuario: Usuario){
@@ -37,6 +37,9 @@ export class UsuarioserviceService {
 
   desactivarUsuario(idUsuario: string){
     return this.http.delete(`${this.urlApi}EliminarUsuario?IdUsuario=${idUsuario}`, httpOptions);
+  }
+  altaUsuario(usuario: Usuario){
+    return this.http.post(`${this.urlApi}AltaUsuario`, usuario, httpOptions);
   }
   //#endregion
 }

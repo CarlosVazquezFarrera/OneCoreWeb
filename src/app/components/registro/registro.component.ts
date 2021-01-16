@@ -2,9 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario';
 import { environment } from 'src/environments/environment.prod';
+import { Router } from '@angular/router';
 
 import { MathValidator } from '../shared/CustomValidator/MatchValidator';
+import { UsuarioserviceService } from 'src/app/services/usuarioservice.service';
+import { SimpleResponse } from 'src/app/models/Api/SimpleResponse';
 
+
+import Swal from 'sweetalert2';
 import * as CryptoJS from 'crypto-js';
 
 @Component({
@@ -14,7 +19,9 @@ import * as CryptoJS from 'crypto-js';
 })
 export class RegistroComponent implements OnInit {
   //#endregion Constructor
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder,
+    private usuarioService: UsuarioserviceService,
+    private router: Router) { 
     this.regex = environment.pattern;
     this.generarFormulario();
   }
@@ -43,7 +50,7 @@ export class RegistroComponent implements OnInit {
     });
   }
 
-
+  //Ejecuta el método del Api que realzia el regfistro
   registro(event: Event): void{
     event.preventDefault();
     if (this.form.invalid){
@@ -57,7 +64,36 @@ export class RegistroComponent implements OnInit {
     this.usuario.sexo = this.sexoField.value;
     this.usuario.estatus = this.estatusField.value;
 
-    console.log(this.usuario);
+    //Modal de cargando
+    Swal.fire({
+      icon:'info',
+      allowOutsideClick: false,
+      text: 'Registrando'
+    });
+    Swal.showLoading();
+    this.usuarioService.altaUsuario(this.usuario).subscribe((apiAltaResponse: SimpleResponse)=>{
+      if (apiAltaResponse.exito){
+        Swal.fire({
+          icon:'success',
+          allowOutsideClick: false,
+          text: apiAltaResponse.mensaje
+        });
+        this.router.navigateByUrl('login');
+      }
+      else{
+        Swal.fire({
+          icon:'warning',
+          allowOutsideClick: false,
+          text: apiAltaResponse.mensaje
+        });
+      }
+    },()=>{ //Error inesperado
+      Swal.fire({
+        icon:'error',
+        allowOutsideClick: false,
+        text: environment.errorApiMensaje
+      });
+    });
   }
   //#endregion
 
