@@ -8,6 +8,8 @@ import { Usuario } from 'src/app/models/usuario';
 
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { SimpleResponse } from 'src/app/models/Api/SimpleResponse';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,7 +22,8 @@ export class HomeComponent implements OnInit {
   //#region Constructor
   constructor(
     private usuarioService: UsuarioserviceService, 
-    private dialog: MatDialog){
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar){
 
   }
   //#endregion
@@ -28,6 +31,8 @@ export class HomeComponent implements OnInit {
   //#region Atributos
   public Usuarios: Array<Usuario>;
   public recargar: boolean = false;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'start';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   //#endregion
 
   //#region Métodos
@@ -53,12 +58,27 @@ export class HomeComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: `Sí`,
       cancelButtonText: `No`,
+      confirmButtonColor: '#d14529'
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Saved!', '', 'success')
-      } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info')
+        this.usuarioService.desactivarUsuario(usuario.id).subscribe((apiDesactivarUsuarioResponse: SimpleResponse)=>{
+          if(apiDesactivarUsuarioResponse.exito){
+            this.cargarDatos();
+            this.snackBar.open('Se desactivó al usuario',  'Aceptar', {
+              duration: 5000,
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+            });
+          }
+          else{
+            Swal.fire({
+              icon:'info',
+              allowOutsideClick: false,
+              text: apiDesactivarUsuarioResponse.mensaje
+            }); 
+          }
+        });
       }
     })
   }

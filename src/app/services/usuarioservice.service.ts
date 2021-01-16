@@ -34,5 +34,9 @@ export class UsuarioserviceService {
   actualizarUsuario(usuario: Usuario){
     return this.http.patch(`${this.urlApi}ActualizarUsuario`, usuario, httpOptions);
   }
+
+  desactivarUsuario(idUsuario: string){
+    return this.http.delete(`${this.urlApi}EliminarUsuario?IdUsuario=${idUsuario}`, httpOptions);
+  }
   //#endregion
 }
