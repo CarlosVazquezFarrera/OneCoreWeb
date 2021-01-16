@@ -8,14 +8,16 @@ import { LoginComponent } from './components/login/login.component';
 
 import { AuthGuard } from './guard/auth.guard';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { LoginguardGuard } from './guard/loginguard.guard';
+import { LoggedguardGuard } from './guard/loggedguard.guard';
 
 
 const routes: Routes = [
-  { path:'login', component: LoginComponent },
-  { path:'home', component: HomeComponent },
-  { path:'registro', component: RegistroComponent },
-  { path:'perfil', component: PerfilComponent },
-  { path:'**', pathMatch: 'full', redirectTo:'registro' }
+  { path:'login', component: LoginComponent, canActivate: [LoginguardGuard] },
+  { path:'home', component: HomeComponent, canActivate: [LoggedguardGuard] },
+  { path:'registro', component: RegistroComponent, canActivate: [LoggedguardGuard] },
+  { path:'perfil', component: PerfilComponent, canActivate: [LoggedguardGuard]},
+  { path:'**', pathMatch: 'full', redirectTo:'login' }
 ];
 
 @NgModule({

@@ -12,13 +12,11 @@ export class LoggedguardGuard implements CanActivate {
   canActivate(): boolean{
 
     if (this.sessionService.Islogged()){
-      this.router.navigateByUrl('home');
-      return false;
-    }
-    else{
-      
       return true;
     }
+    else{
+      this.router.navigateByUrl('login');
+      return false;
+    }
   }
-  
 }
