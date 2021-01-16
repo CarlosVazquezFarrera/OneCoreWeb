@@ -7,9 +7,10 @@ import { Response } from 'src/app/models/Api/Response';
 import { Usuario } from 'src/app/models/usuario';
 
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
+
 import { SimpleResponse } from 'src/app/models/Api/SimpleResponse';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.cargarDatos();
   }
+  //Envía al método del api la información necesaria para actualziar u usuario
   public editarUsuario(usuario: Usuario): void{
     const dialogRef = this.dialog.open(EditarusuarioComponent, { 
       data: usuario, 
@@ -51,6 +53,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  //Ejecuta la llamada del api en la con la que se desactiva un usuario
   public desactivarUsuario(usuario: Usuario): void{
     console.log(usuario);
     Swal.fire({
@@ -60,7 +63,6 @@ export class HomeComponent implements OnInit {
       cancelButtonText: `No`,
       confirmButtonColor: '#d14529'
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.usuarioService.desactivarUsuario(usuario.id).subscribe((apiDesactivarUsuarioResponse: SimpleResponse)=>{
           if(apiDesactivarUsuarioResponse.exito){

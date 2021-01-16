@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
+import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
 import { LoginserviceService } from 'src/app/services/loginservice.service'; 
 import { Usuario } from 'src/app/models/usuario';
 import { Response } from 'src/app/models/Api/Response';
-import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
 
 import Swal from 'sweetalert2';
 import * as CryptoJS from 'crypto-js';

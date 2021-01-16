@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Usuario } from 'src/app/models/usuario';
 import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
@@ -26,13 +26,14 @@ export class PerfilComponent implements OnInit {
     private servicioUsuario: UsuarioserviceService,
     private router: Router) {
       this.ObtenerUsuarioYConstruirFormulario(); 
+      this.pattern = environment.pattern;
     }
   //#endregion
   
   //#region  Atributos
   form: FormGroup;
   usuario: Usuario;
-  pattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{10,}$/;
+  pattern: RegExp;
   //#endregion
 
   //#region Métodos
@@ -54,7 +55,6 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-
   ngOnInit(): void {
   }
   //Realiza la petición para actualziar el usuario 

@@ -1,54 +1,131 @@
 <div class="limiter animated fadeInRight">
     <div class="container-login100">
-        <div class="wrap-login100 p-t-50 p-b-90">
+        <div class="wrap-login100 p-t-50 p-b-20 border">
             
-            <form class="login100-form validate-form flex-sb flex-w">
-
-                <span class="login100-form-title p-b-51">
+            <form   [formGroup]="form"
+                    (ngSubmit)="registro($event)" 
+                    class="login100-form validate-form flex-sb flex-w justify-content-center px-3" >
+                <span class="login100-form-title p-b-20">
                     Crear nueva cuenta
                 </span>
-
-                <!-- <span *ngIf = "registroForms.submitted && registroForms.controls['email'].errors" 
-                      class="text-danger animated fadeIn">El correo es obligatorio</span> -->
-
-                <div class="wrap-input100 m-b-16">
+                <!-- Correo -->
+                <div class="wrap-input100">
                     <input class="input100" 
                            type="email" 
                            name="email"
-                           placeholder="Email">
-
+                           placeholder="Correo"
+                           formControlName="email">
                     <span class="focus-input100"></span>
                 </div>
-
-                <div class="wrap-input100 m-b-16">
+                <!-- Mensaje de error del correo -->
+                <div *ngIf="emailField.hasError && emailField.touched">
+                    <span *ngIf="emailField.hasError('required')"
+                        class="text-danger animated fadeIn"> El correo es obligatorio</span>
+                    <span *ngIf="emailField.hasError('email')"
+                        class="text-danger animated fadeIn">Ingrese un correo válido</span>
+                </div>
+                <!-- Nombre de usuario -->
+                <div class="wrap-input100 m-t-16">
                     <input class="input100" 
                            type="text" 
-                           name="nombre" 
-                           placeholder="Nombre y apellidos">
-
+                           name="nombreUsuario" 
+                           placeholder="Nombre de usuario"
+                           formControlName="nombreUsuario">
                     <span class="focus-input100"></span>
                 </div>
-                
-                <div class="wrap-input100 m-b-16">
+                <!-- Mensaje de error del usuario -->
+                <div *ngIf="nombreUsuarioField.hasError && nombreUsuarioField.touched">
+                    <span *ngIf="nombreUsuarioField.hasError('required')"
+                        class="text-danger animated fadeIn"> El nombre de usuario es obligatorio</span>
+                    <span *ngIf="nombreUsuarioField.hasError('minlength')"
+                        class="text-danger animated fadeIn">Mínimo 7 caracteres</span>
+                </div>
+                <!-- Contraseña -->
+                <div class="wrap-input100 m-t-16">
                     <input class="input100"
                            type="password" 
                            name="password" 
-                           placeholder="Password">
+                           placeholder="Password"
+                           formControlName="password">
+                    <span class="focus-input100"></span>
+                </div>
+                <!-- Mensaje de error de contraseña -->
+                <div *ngIf="passwordField.hasError && passwordField.touched">
+                    <span *ngIf="passwordField.hasError('required')"
+                            class="text-danger animated fadeIn"> La contraseña es obligatoria</span>
+                    <span *ngIf="passwordField.hasError('minlength')"
+                            class="text-danger animated fadeIn"> Mínimo 10 caracteres</span>
+                    <span *ngIf="passwordField.hasError('pattern') && !passwordField.hasError('minlength')"
+                            class="text-danger text-break animated fadeIn"> Al menos una letra mayúscula, una minúscula, un número y un caracter especial</span>
+
+                </div>
+                 <!-- Confirmar contraseña -->
+                 <div class="wrap-input100 m-t-16">
+                    <input class="input100"
+                           type="password" 
+                           name="password" 
+                           placeholder="Repetir contraseña"
+                           formControlName="passwordConfirmacion">
 
                     <span class="focus-input100"></span>
                 </div>
+                <!-- Mensaje de error de confirmación de contraseña -->
+                <div *ngIf="passwordConfirmacionField.hasError && passwordConfirmacionField.touched">
+                    <span *ngIf="passwordConfirmacionField.hasError('required')" 
+                            class="text-danger animated fadeIn"> La confirmación de la contraseña es obligatoria</span>
+                    <span *ngIf="passwordConfirmacionField.hasError('confirmPasswordValidator')" 
+                            class="text-danger animated fadeIn">Las contraseñas no coinciden</span>
+                </div>
+                 <!-- Sexo -->
+                <div class="w-full d-flex justify-content-between m-t-10" data-validate>
+                    <div>
+                        <label class="form-label m-t-10l">Sexo:</label>
+                    </div>
+                    <div class="form-check">
+                        <input  class="form-check-input" 
+                                type="radio" 
+                                name="sexo" 
+                                id="exampleRadios1" 
+                                value="F" 
+                                formControlName="sexo">
+                        <label class="form-check-label" for="exampleRadios1">
+                          Mujer
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input  class="form-check-input" 
+                                type="radio" 
+                                name="sexo" 
+                                id="exampleRadios2" 
+                                value="M"
+                                formControlName="sexo">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Hombre
+                        </label>
+                    </div>
+                </div>
                 
-
-                <a routerLink="login" class="txt1 mouse">
-                    ¿Ya tienes cuenta? / Ingresar
-                </a>
-
+                <!-- Estatus-->             
+                <div class="w-full d-flex justify-content-between m-t-16" data-validate>
+                    <div>
+                        <label class="form-labe m-t-10l">Estatus:</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input  class="form-check-input" 
+                                type="checkbox"
+                                name="estatus"
+                                formControlName="estatus">
+                      </div>
+                </div>
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn" type="submit">
                         Crear cuenta
                     </button>
                 </div>
-
+                <a routerLink="/login" class="txt1 mouse m-t-16">
+                    ¿Ya tienes cuenta? / Ingresar
+                </a>
             </form>
         </div>
     </div>

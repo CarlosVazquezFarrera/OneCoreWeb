@@ -59,11 +59,17 @@
                            placeholder="Correo">
                     <span class="focus-input100"></span>
                 </div>
-                 <!-- Mensaje de error de error de la contraseña -->
-                <span *ngIf="correoField.touched && correoField.hasError('required')" 
-                        class="text-danger animated fadeIn">
-                        El correo es obligatorio
-                </span>
+                 <!-- Error Mensaje de correo -->
+                 <div *ngIf="correoField.touched && correoField.hasError">
+                    <span *ngIf="correoField.hasError('required')" 
+                            class="text-danger animated fadeIn">
+                            El correo es obligatorio
+                    </span>
+                     <span *ngIf="correoField.hasError('email')" 
+                            class="text-danger animated fadeIn">
+                            Ingrese un correo válido
+                    </span>
+                 </div>
                 
                 <!-- Contraseña -->
                 <div class="wrap-input100 m-t-16" data-validate>
