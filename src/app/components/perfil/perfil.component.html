@@ -94,9 +94,13 @@
                            placeholder="Confirmar Password">
                     <span class="focus-input100"></span>
                 </div>
-                <!-- Mensaje de error de confirmación de contraseña --> 
-                <span *ngIf="passwordConfirmacionField.hasError('required') && passwordConfirmacionField.touched"
-                        class="text-danger animated fadeIn"> La confirmación de la contraseña es obligatoria</span>
+                <!-- Mensaje de error de confirmación de contraseña -->
+                <div *ngIf="passwordConfirmacionField.hasError && passwordConfirmacionField.touched">
+                    <span *ngIf="passwordConfirmacionField.hasError('required')" 
+                            class="text-danger animated fadeIn"> La confirmación de la contraseña es obligatoria</span>
+                    <span *ngIf="passwordConfirmacionField.hasError('confirmPasswordValidator')" 
+                            class="text-danger animated fadeIn">Las contraseñas no coinciden</span>
+                </div>
                 
                 <!-- Boton -->
                 <div class="container-login100-form-btn m-t-17">

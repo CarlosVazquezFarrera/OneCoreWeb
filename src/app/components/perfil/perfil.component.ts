@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/forms';
 
 import { Usuario } from 'src/app/models/usuario';
 import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
 
 import * as CryptoJS from 'crypto-js';
+import { MathValidator } from '../shared/CustomValidator/MatchValidator';
 
 @Component({
   selector: 'app-perfil',
@@ -25,14 +26,20 @@ export class PerfilComponent implements OnInit {
   private ObtenerUsuarioYConstruirFormulario(){
     this.usuario = this.sessionService.GetUsuario();
 
-    this.form = this.formBuilder.group({
-      usuario: [this.usuario.nombreUsuario, [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(10), Validators.pattern(this.pattern)]],
-      passwordConfirmacion: ['', [Validators.required, Validators.pattern(this.pattern), Validators.minLength(10)]],
-      sexo: [this.usuario.sexo, [Validators.required]],
-      correo: [this.usuario.correo, [Validators.required, Validators.email]]
-    });
+    this.form = this.formBuilder.group(
+      {
+        usuario: [this.usuario.nombreUsuario, [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(10), Validators.pattern(this.pattern)]],
+        passwordConfirmacion: ['', [Validators.required]],
+        sexo: [this.usuario.sexo, [Validators.required]],
+        correo: [this.usuario.correo, [Validators.required, Validators.email] ]
+      }, 
+      {
+        validator: MathValidator("password", "passwordConfirmacion")
+      }
+    );
   }
+
   
   ngOnInit(): void {
     //this.ObtenerUsuario();
