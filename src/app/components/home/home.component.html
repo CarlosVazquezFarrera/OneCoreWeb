@@ -8,15 +8,19 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Nombre Usuario</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Sexo</th>
+          <th scope="col">Estatus</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let usuario of Usuarios;">
+          <td>{{usuario.id}}</td>
           <td>{{usuario.nombreUsuario}}</td>
-          <td>@mdo</td>
+          <td>{{usuario.correo}}</td>
+          <td>{{usuario.sexo}}</td>
+          <td>{{usuario.estatus | estatuspipe}}</td>
         </tr>
       </tbody>
     </table>

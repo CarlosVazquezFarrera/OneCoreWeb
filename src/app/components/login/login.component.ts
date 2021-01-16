@@ -5,10 +5,11 @@ import { environment } from 'src/environments/environment';
 
 import { LoginserviceService } from 'src/app/services/loginservice.service'; 
 import { Usuario } from 'src/app/models/usuario';
-
-import Swal from 'sweetalert2';
 import { Response } from 'src/app/models/Api/Response';
 import { SessionstorageserviceService } from 'src/app/services/sessionstorageservice.service';
+
+import Swal from 'sweetalert2';
+import * as CryptoJS from 'crypto-js';
 
 
 @Component({
@@ -58,8 +59,9 @@ export class LoginComponent implements OnInit {
 
     this.usuario = new Usuario ();
     this.usuario.correo = this.emailField.value;
-    this.usuario.password = this.passwordFiel.value;
+    this.usuario.password = CryptoJS.SHA3(this.passwordFiel.value).toString();
 
+    console.log(this.usuario.password);
     //Modal de cargando
     Swal.fire({
       icon:'info',
