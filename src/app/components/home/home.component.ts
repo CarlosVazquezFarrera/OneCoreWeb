@@ -10,15 +10,9 @@ import { SessionstorageserviceService } from 'src/app/services/sessionstorageser
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private sessionService: SessionstorageserviceService,
-              private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  logOut(){
-    this.sessionService.RemoveLogin();
-    this.router.navigateByUrl('login');
   }
 
 }
