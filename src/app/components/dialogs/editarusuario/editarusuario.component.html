@@ -1,0 +1,76 @@
+<div class="limiter animated fadeInLeft">
+    <div class="container-login100">
+        <div class="wrap-login100 px-3 border">
+            <!-- Formulario -->
+            <form  [formGroup]="form" 
+                    (ngSubmit)="login($event)"
+                    class="flex-sb flex-w justify-content-center">
+                <!-- Email -->
+                <div class="wrap-input100">
+                    <input class="input100"
+                        type="email" 
+                        name="correo" 
+                        formControlName="email"
+                        placeholder="Correo">
+                    <span class="focus-input100"></span>
+                </div>
+                <!-- Mensaje de error de error de mensaje -->
+                <!-- <div *ngIf="emailField.hasError && emailField.touched"> -->
+                    <!-- Correo ingresado -->
+                    <!-- <span *ngIf="emailField.hasError('required')"
+                            class="text-danger animated fadeIn"> El correo es obligatorio</span> -->
+                    <!-- Texto ingresado con formato no válido -->
+                    <!-- <span *ngIf="emailField.hasError('email')"
+                            class="text-danger animated fadeIn"> Ingrese un correo válido</span> -->
+                <!-- </div> -->
+           
+                <div class="wrap-input100 m-t-16" data-validate>
+                    <input class="input100"
+                           type="password" 
+                           name="password" 
+                           formControlName="password"
+                           placeholder="Password">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 m-t-16" data-validate>
+                    <input class="input100"
+                           type="password" 
+                           name="password" 
+                           formControlName="password"
+                           placeholder="Password">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 m-t-16" data-validate>
+                    <input class="input100"
+                           type="password" 
+                           name="password" 
+                           formControlName="password"
+                           placeholder="Password">
+                    <span class="focus-input100"></span>
+                </div>
+                <!-- Pasword -->
+                <div class="wrap-input100 m-t-16" data-validate>
+                    <input class="input100"
+                           type="password" 
+                           name="password" 
+                           formControlName="password"
+                           placeholder="Password">
+                    <span class="focus-input100"></span>
+                </div>
+                 <!-- Mensaje de error de error de la contraseña -->
+                <!-- <span *ngIf="passwordFiel.touched && passwordFiel.hasError('required')" 
+                        class="text-danger animated fadeIn">
+                        La contraseña es obligatoria
+                </span>               -->
+                <!-- Boton -->
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="login100-form-btn" 
+                            type="submit">
+                        Actualizar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
