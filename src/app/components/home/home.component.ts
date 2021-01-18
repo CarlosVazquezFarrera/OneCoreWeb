@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { EditarusuarioComponent } from '../dialogs/editarusuario/editarusuario.component';
 import { UsuarioserviceService } from 'src/app/services/usuarioservice.service';
 import { Response } from 'src/app/models/Api/Response';
 import { Usuario } from 'src/app/models/usuario';
@@ -15,8 +14,7 @@ import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 
@@ -41,16 +39,6 @@ export class HomeComponent implements OnInit {
   //Una vez que se renderiza la pantalla, se consulta al api y se obtiene la información
   ngOnInit(): void {
     this.cargarDatos();
-  }
-  //Envía al método del api la información necesaria para actualziar u usuario
-  public editarUsuario(usuario: Usuario): void{
-    const dialogRef = this.dialog.open(EditarusuarioComponent, { 
-      data: usuario, 
-      disableClose: true});
-
-    dialogRef.afterClosed().subscribe(()=>{
-      this.cargarDatos();
-    });
   }
 
   //Ejecuta la llamada del api en la con la que se desactiva un usuario

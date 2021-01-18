@@ -15,8 +15,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
-  templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  templateUrl: './perfil.component.html'
 })
 export class PerfilComponent implements OnInit {
 

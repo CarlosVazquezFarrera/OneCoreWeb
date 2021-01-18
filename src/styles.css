@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.acction-table:hover{
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #827ffe;
+    border-color: #827ffe;
+}
+
+.editar-icon{
+    width: 46px;
+    width: 46px;
+    margin-bottom: 20px;
+}
