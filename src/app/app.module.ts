@@ -12,7 +12,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { EstatuspipePipe } from './pipes/estatuspipe.pipe';
-import { EditarusuarioComponent } from './components/dialogs/editarusuario/editarusuario.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { from } from 'rxjs';
@@ -25,7 +24,6 @@ import { from } from 'rxjs';
     RegistroComponent,
     NavbarComponent,
     EstatuspipePipe,
-    EditarusuarioComponent,
     PerfilComponent
   ],
   imports: [
