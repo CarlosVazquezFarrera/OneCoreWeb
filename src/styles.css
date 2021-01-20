@@ -16,3 +16,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 46px;
     margin-bottom: 20px;
 }
+.cursor{
+    cursor: pointer;
+}
+
+.logOut{
+    color:#A1192C;
+}
